@@ -9,8 +9,22 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      myName: 'Adam'
+      myAppointments: []
     };
+  }
+
+  componentDidMount() {
+    // Once project is compiled, data.json will be in the same dir relative to App.js
+    fetch('./data.json')
+      .then((response) => response.json())
+      .then((result) => {
+        const apts = result.map((item) => {
+          return item;
+        });
+        this.setState({
+          myAppointments: apts
+        });
+      });
   }
 
   render() {
@@ -20,7 +34,6 @@ class App extends Component {
           <div className="row">
             <div className="col-md-12 bg-white">
               <div className="container">
-                {this.state.myName}
                 <AddAppointments />
                 <SearchAppointments />
                 <ListAppointments />
